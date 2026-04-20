@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)file:///Users/zijunzhao/Downloads/American-Outdoor-Life-Brief_2.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>American Outdoor Life · Research Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./index_files/css2" rel="stylesheet">
+<style>
+  :root {
+    /* Remode brand palette */
+    --ink: #000000;
+    --ink-soft: #2a2a2a;
+    --ink-mute: #8a8a8a;
+    --paper: #ffffff;
+    --paper-warm: #efefe4;   /* brand beige */
+    --paper-gray: #ededed;   /* brand gray */
+    --rule: #dcdcdc;
+    --rule-strong: #000000;
+    --accent: #ea5504;       /* brand orange */
+    --accent-deep: #c44502;
+    --blue: #0a567c;         /* brand blue */
+    --done: #0a567c;         /* check-done uses brand blue */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 16px;
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+
+  /* ==========================
+     paper grain background
+     ========================== */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(184,73,31,0.04) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(90,107,63,0.04) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.05 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+
+  .page-wrap { position: relative; z-index: 2; }
+
+  /* ==========================
+     top progress bar
+     ========================== */
+  .progress-bar-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(216, 206, 186, 0.4);
+    z-index: 100;
+  }
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ==========================
+     side nav
+     ========================== */
+  .side-nav {
+    position: fixed;
+    top: 50%;
+    left: 2rem;
+    transform: translateY(-50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+  .side-nav a {
+    color: var(--ink-mute);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    transition: color 0.25s;
+    letter-spacing: 0.08em;
+  }
+  .side-nav a::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--ink-mute);
+    transition: all 0.25s;
+  }
+  .side-nav a:hover,
+  .side-nav a.active {
+    color: var(--ink);
+  }
+  .side-nav a.active::before {
+    width: 40px;
+    background: var(--accent);
+    height: 2px;
+  }
+  @media (max-width: 1100px) {
+    .side-nav { display: none; }
+  }
+
+  /* ==========================
+     progress floating badge
+     ========================== */
+  .progress-badge {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 50;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.9rem 1.2rem;
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 8px 30px rgba(26,22,19,0.25);
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .progress-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 36px rgba(26,22,19,0.3);
+  }
+  .progress-badge .pb-count {
+    color: var(--accent-soft);
+    font-weight: 500;
+  }
+  .progress-badge .pb-ring {
+    position: relative;
+    width: 28px;
+    height: 28px;
+  }
+  .progress-badge svg { transform: rotate(-90deg); }
+  .progress-badge circle {
+    fill: none;
+    stroke-width: 3;
+  }
+  .progress-badge .pb-track { stroke: rgba(255,255,255,0.15); }
+  .progress-badge .pb-fill {
+    stroke: var(--accent-soft);
+    stroke-dasharray: 75.4;
+    stroke-dashoffset: 75.4;
+    transition: stroke-dashoffset 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ==========================
+     layout
+     ========================== */
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ==========================
+     hero
+     ========================== */
+  .hero {
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+  }
+  .hero-inner {
+    max-width: 880px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .kicker::after {
+    content: '';
+    flex: 1;
+    max-width: 120px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+  .hero h1 {
+    font-family: 'Jost', sans-serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 500;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 2.5rem;
+    text-transform: none;
+  }
+  .hero h1 em {
+    font-style: normal;
+    font-weight: inherit;
+    color: var(--accent);
+    position: relative;
+  }
+  .hero .dek {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    font-weight: 400;
+    font-style: normal;
+    color: var(--ink-soft);
+    max-width: 620px;
+    line-height: 1.6;
+    margin-bottom: 4rem;
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 2rem;
+    max-width: 620px;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+  }
+  .hero-meta .mt-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .hero-meta .mt-value {
+    font-family: 'Jost', sans-serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+
+  /* floating decorations */
+  .hero-deco {
+    position: absolute;
+    top: 8rem;
+    right: 4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--ink-mute);
+    text-align: right;
+    line-height: 2;
+  }
+  @media (max-width: 800px) {
+    .hero-deco { display: none; }
+  }
+
+  /* ==========================
+     section base
+     ========================== */
+  section {
+    padding: 6rem 0;
+    position: relative;
+  }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .sec-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    font-weight: 500;
+  }
+  .sec-title {
+    font-family: 'Jost', sans-serif;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    flex: 1;
+  }
+  .sec-title em { font-style: normal; font-weight: inherit; color: var(--accent); }
+
+  .sec-intro {
+    font-family: 'Jost', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 640px;
+    margin-bottom: 3rem;
+    padding-left: 1.2rem;
+    border-left: 2px solid var(--accent);
+  }
+
+  /* ==========================
+     content blocks
+     ========================== */
+  .block {
+    margin-bottom: 3.5rem;
+  }
+  .block-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .block-label::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .block h3 {
+    font-family: 'Jost', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .block h3 .h3-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    stroke: var(--ink);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .block p {
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+  .block p strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* drop cap for first paragraph of each major block */
+  /* ==========================
+     checklist
+     ========================== */
+  .checklist {
+    list-style: none;
+    margin: 1.5rem 0;
+  }
+  .checklist li {
+    position: relative;
+    padding: 1rem 0 1rem 2.8rem;
+    border-bottom: 1px dashed var(--rule);
+    cursor: pointer;
+    transition: padding 0.25s ease;
+    user-select: none;
+  }
+  .checklist li:hover {
+    padding-left: 3.2rem;
+  }
+  .checklist li:last-child {
+    border-bottom: none;
+  }
+  .checklist li .cb {
+    position: absolute;
+    left: 0;
+    top: 1.15rem;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--ink-soft);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s;
+    background: transparent;
+  }
+  .checklist li .cb::after {
+    content: '';
+    width: 10px;
+    height: 6px;
+    border-left: 2px solid var(--paper);
+    border-bottom: 2px solid var(--paper);
+    transform: rotate(-45deg) translateY(-2px) scale(0);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .checklist li.done .cb {
+    background: var(--done);
+    border-color: var(--done);
+  }
+  .checklist li.done .cb::after {
+    transform: rotate(-45deg) translateY(-2px) scale(1);
+  }
+  .checklist li.done .cl-title,
+  .checklist li.done .cl-desc {
+    color: var(--ink-mute);
+  }
+  .checklist li.done .cl-title {
+    text-decoration: line-through;
+    text-decoration-color: var(--ink-mute);
+    text-decoration-thickness: 1px;
+  }
+  .cl-title {
+    display: block;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+    font-size: 1.02rem;
+    transition: color 0.25s;
+    letter-spacing: -0.005em;
+  }
+  .cl-desc {
+    display: block;
+    font-size: 0.94rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    transition: color 0.25s;
+  }
+
+  /* ==========================
+     pullquote / callout
+     ========================== */
+  .pullquote {
+    margin: 3rem 0;
+    padding: 2rem 2.5rem;
+    border-left: 3px solid var(--accent);
+    background: var(--paper-warm);
+    font-family: 'Jost', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .pullquote::before {
+    content: '"';
+    font-size: 3rem;
+    color: var(--accent);
+    line-height: 0;
+    vertical-align: -0.4em;
+    margin-right: 0.3rem;
+    font-weight: 500;
+  }
+
+  /* ==========================
+     region grid
+     ========================== */
+  .region-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  .region-card {
+    background: var(--paper-warm);
+    padding: 1.5rem;
+    border-radius: 2px;
+    border-top: 2px solid var(--accent);
+    transition: transform 0.25s ease;
+  }
+  .region-card:hover {
+    transform: translateY(-3px);
+  }
+  .region-card .rc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .region-card h4 {
+    font-family: 'Jost', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.005em;
+  }
+  .region-card p {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* ==========================
+     deliverable cards
+     ========================== */
+  .deliverables {
+    display: grid;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .del-item {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 1.5rem;
+    align-items: start;
+    padding: 1.5rem;
+    background: var(--paper-warm);
+    border-radius: 2px;
+    transition: transform 0.25s;
+  }
+  .del-item:hover { transform: translateX(4px); }
+  .del-num {
+    font-family: 'Jost', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 500;
+    font-feature-settings: "tnum" 1;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .del-body h4 {
+    font-family: 'Jost', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+  .del-body p {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .del-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink-mute);
+    white-space: nowrap;
+  }
+
+  /* ==========================
+     appendix header
+     ========================== */
+  .appendix-header {
+    padding: 3rem 0 2rem;
+    border-top: 2px solid var(--ink);
+    margin-top: 4rem;
+  }
+  .appendix-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  .appendix-title {
+    font-family: 'Jost', sans-serif;
+    font-size: 2.3rem;
+    font-weight: 400;
+    line-height: 1.15;
+  }
+  .appendix-title em {
+    font-style: normal;
+    font-weight: inherit;
+    color: var(--accent);
+  }
+  .appendix-for {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink-mute);
+    margin-top: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ==========================
+     methods links grid
+     ========================== */
+  .source-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+  }
+  .source-item {
+    padding: 1.2rem;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .source-item:hover {
+    border-color: var(--accent);
+    background: rgba(184,73,31,0.03);
+  }
+  .source-item h5 {
+    font-family: 'Jost', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+  .source-item p {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  /* ==========================
+     footer
+     ========================== */
+  footer {
+    padding: 6rem 2rem 4rem;
+    text-align: center;
+    border-top: 1px solid var(--rule);
+    margin-top: 6rem;
+  }
+  footer .end-mark {
+    font-family: 'Jost', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  footer .colophon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--ink-mute);
+    line-height: 2;
+  }
+  footer .reset-btn {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.7rem 1.5rem;
+    border: 1px solid var(--ink-mute);
+    background: transparent;
+    color: var(--ink-soft);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-transform: uppercase;
+  }
+  footer .reset-btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  /* ==========================
+     mobile tweaks
+     ========================== */
+  @media (max-width: 700px) {
+    .hero { padding: 4rem 1.5rem 3rem; min-height: auto; }
+    .container { padding: 0 1.5rem; }
+    section { padding: 4rem 0; }
+    .del-item { grid-template-columns: 40px 1fr; }
+    .del-tag { grid-column: 2; }
+    .progress-badge { bottom: 1rem; right: 1rem; padding: 0.7rem 1rem; }
+  }
+
+  /* fade-in on load */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .d1 { animation-delay: 0.1s; }
+  .d2 { animation-delay: 0.25s; }
+  .d3 { animation-delay: 0.4s; }
+  .d4 { animation-delay: 0.55s; }
+  .d5 { animation-delay: 0.7s; }
+
+  /* ==========================
+     language toggle
+     ========================== */
+  body.lang-cn,
+  body.lang-cn .hero h1,
+  body.lang-cn .sec-title,
+  body.lang-cn .appendix-title,
+  body.lang-cn .block h3,
+  body.lang-cn .del-body h4,
+  body.lang-cn .source-item h5,
+  body.lang-cn .cl-title,
+  body.lang-cn .cl-desc,
+  body.lang-cn .hero .dek,
+  body.lang-cn .sec-intro,
+  body.lang-cn .pullquote,
+  body.lang-cn .block p,
+  body.lang-cn .del-body p,
+  body.lang-cn .source-item p,
+  body.lang-cn .region-card h4,
+  body.lang-cn .region-card p,
+  body.lang-cn .kicker,
+  body.lang-cn .mt-value,
+  body.lang-cn .appendix-for,
+  body.lang-cn .colophon,
+  body.lang-cn .end-mark {
+    font-family: 'Jost', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  }
+
+  body.lang-cn .hero h1 {
+    line-height: 1.2;
+  }
+
+  .lang-toggle {
+    position: fixed;
+    top: 1.6rem;
+    right: 1.6rem;
+    z-index: 60;
+    display: flex;
+    gap: 0;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .lang-toggle button {
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    padding: 0.55rem 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .lang-toggle button + button {
+    border-left: 1px solid var(--ink);
+  }
+  .lang-toggle button:hover {
+    background: var(--paper-warm);
+  }
+  .lang-toggle button.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  @media (max-width: 700px) {
+    .lang-toggle { top: 1rem; right: 1rem; }
+    .lang-toggle button { padding: 0.5rem 0.75rem; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar" id="scrollProgress"></div>
+</div>
+
+<nav class="side-nav" id="sideNav">
+  <a href="file:///Users/zijunzhao/Downloads/American-Outdoor-Life-Brief_2.html#intro" data-target="intro" class="active"><span data-en="00  Opening" data-cn="00  开场">00 &nbsp;Opening</span></a>
+  <a href="file:///Users/zijunzhao/Downloads/American-Outdoor-Life-Brief_2.html#scope" data-target="scope"><span data-en="01  Scope" data-cn="01  范围">01 &nbsp;Scope</span></a>
+  <a href="file:///Users/zijunzhao/Downloads/American-Outdoor-Life-Brief_2.html#backyard" data-target="backyard"><span data-en="02  Backyard" data-cn="02  后院">02 &nbsp;Backyard</span></a>
+  <a href="file:///Users/zijunzhao/Downloads/American-Outdoor-Life-Brief_2.html#camping" data-target="camping"><span data-en="03  Camping" data-cn="03  露营">03 &nbsp;Camping</span></a>
+  <a href="file:///Users/zijunzhao/Downloads/American-Outdoor-Life-Brief_2.html#culture" data-target="culture"><span data-en="04  Culture" data-cn="04  文化">04 &nbsp;Culture</span></a>
+  <a href="file:///Users/zijunzhao/Downloads/American-Outdoor-Life-Brief_2.html#deliverables" data-target="deliverables"><span data-en="05  Deliverables" data-cn="05  交付物">05 &nbsp;Deliverables</span></a>
+  <a href="file:///Users/zijunzhao/Downloads/American-Outdoor-Life-Brief_2.html#methods" data-target="methods"><span data-en="06  Sources" data-cn="06  信息源">06 &nbsp;Sources</span></a>
+  <a href="file:///Users/zijunzhao/Downloads/American-Outdoor-Life-Brief_2.html#appendix" data-target="appendix"><span data-en="A  Appendix" data-cn="A  附录">A &nbsp;Appendix</span></a>
+</nav>
+
+<div class="lang-toggle" id="langToggle" role="group" aria-label="Language">
+  <button data-lang="en" class="active">EN</button>
+  <button data-lang="cn">CN</button>
+</div>
+
+
+<div class="progress-badge" id="progressBadge" data-en-title="Jump to the next unchecked item" data-cn-title="跳转到下一个未完成项" title="Jump to the next unchecked item">
+  <div class="pb-ring">
+    <svg width="28" height="28">
+      <circle class="pb-track" cx="14" cy="14" r="12"></circle>
+      <circle class="pb-fill" id="pbFill" cx="14" cy="14" r="12" style="stroke-dashoffset: 75.4;"></circle>
+    </svg>
+  </div>
+  <span><span class="pb-count" id="pbCount">0</span> / <span id="pbTotal">16</span></span>
+</div>
+
+<div class="page-wrap">
+
+<!-- HERO -->
+<header class="hero" id="intro">
+  <div class="hero-deco fade-in d4">
+    <div>BRIEF &nbsp;·&nbsp; V1</div>
+    <div>2026</div>
+    <div><span data-en="FOR  RESEARCH" data-cn="调研文档">FOR &nbsp;RESEARCH</span></div>
+  </div>
+  <div class="hero-inner">
+    <div class="kicker fade-in d1"><span data-en="Research Brief  ·  American Outdoor Life" data-cn="美国户外生活调研 Brief">Research Brief &nbsp;·&nbsp; American Outdoor Life</span></div>
+    <h1 class="fade-in d2" data-en-html="How &lt;em&gt;Americans&lt;/em&gt;&lt;br&gt;actually live&lt;br&gt;&lt;em&gt;outdoors&lt;/em&gt;" data-cn-html="&lt;em&gt;美国人&lt;/em&gt;的户外生活&lt;br&gt;到底&lt;em&gt;长什么样&lt;/em&gt;">How <em>Americans</em><br>actually live<br><em>outdoors</em></h1>
+    <p class="dek fade-in d3" data-en="A working document for the researcher. The goal is to give designers, e-commerce operators, and product managers who have never set foot in the United States a real, lived picture of how Americans use their homes, yards, and the wider outdoors—so that when the team designs an Amazon hero image, writes a listing, or signs off on a spec, they know what they&#39;re actually looking at." data-cn="这是给你的一份调研说明。我们想让团队里那些没去过美国的设计师、运营、产品同学，对美国人怎么过日子、怎么用院子、怎么玩户外，有一个具体、能说出画面的印象。这样以后做亚马逊主图、写 listing、定规格的时候，脑子里有东西可以参考，不是全靠猜。">A working document for the researcher. The goal is to give designers, e-commerce operators, and product managers who have never set foot in the United States a real, lived picture of how Americans use their homes, yards, and the wider outdoors—so that when the team designs an Amazon hero image, writes a listing, or signs off on a spec, they know what they're actually looking at.</p>
+    <div class="hero-meta fade-in d4">
+      <div>
+        <div class="mt-label" data-en="Scope" data-cn="覆盖">Scope</div>
+        <div class="mt-value" data-en="Backyard + Camping" data-cn="后院生活 + 露营方式">Backyard + Camping</div>
+      </div>
+      <div>
+        <div class="mt-label" data-en="Market" data-cn="市场">Market</div>
+        <div class="mt-value" data-en="United States" data-cn="美国">United States</div>
+      </div>
+      <div>
+        <div class="mt-label" data-en="Duration" data-cn="时间">Duration</div>
+        <div class="mt-value" data-en="2–4 Weeks" data-cn="2–4 周">2–4 Weeks</div>
+      </div>
+      <div>
+        <div class="mt-label" data-en="Deliverable" data-cn="交付物">Deliverable</div>
+        <div class="mt-value" data-en="Report + Visual Library" data-cn="调研报告 + 图文素材">Report + Visual Library</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION 01: SCOPE OVERVIEW -->
+<section id="scope">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-num">§ 01</span>
+      <h2 class="sec-title" data-en-html="Research &lt;em&gt;Scope&lt;/em&gt;" data-cn-html="调研&lt;em&gt;范围&lt;/em&gt;">Research <em>Scope</em></h2>
+    </div>
+    <p class="sec-intro" data-en="The United States is not a uniform market. The way a family lives in a Texas suburb is almost a different culture from a family in coastal Maine—climate, housing, daily rhythm, and the meaning of &quot;outside&quot; all shift. The research has to respect that." data-cn="美国不能当一个国家看。德州郊区一家人过的日子，和缅因州海边一家人过的日子，差不多是两种文化——天气、房子、每天的节奏，甚至“户外”这个词本身的意思，都不一样。调研要把这些差别摸清楚。">The United States is not a uniform market. The way a family lives in a Texas suburb is almost a different culture from a family in coastal Maine—climate, housing, daily rhythm, and the meaning of "outside" all shift. The research has to respect that.</p>
+
+    <div class="block">
+      <div class="block-label" data-en="Geography" data-cn="地理">Geography</div>
+      <h3 data-en="Five regions, drawn by climate and landscape" data-cn="按气候和地貌，分成五个大区">Five regions, drawn by climate and landscape</h3>
+      <p class="block-intro" data-en="We need a clear distinction between five major regions—each with its own climate, yard typology, seasonal usage window, and dominant landscape elements. This is the part our China team is most starved for, and the part that translates most directly into visual output." data-cn="这五个大区要讲清楚各自的区别：天气怎么样、院子长什么样、一年里什么时候能在户外、常见的植物和景观是什么。这部分国内团队最没概念，也是做出来之后最能直接用在图上的。">We need a clear distinction between five major regions—each with its own climate, yard typology, seasonal usage window, and dominant landscape elements. This is the part our China team is most starved for, and the part that translates most directly into visual output.</p>
+      <div class="region-grid">
+        <div class="region-card">
+          <div class="rc-label">NE</div>
+          <h4 data-en="Northeast · New England" data-cn="东北 · 新英格兰">Northeast · New England</h4>
+          <p data-en="Four distinct seasons, deciduous forests, white clapboard houses, long winter storage period" data-cn="四季分明、阔叶林、白色木板房，冬天要把家具收起来">Four distinct seasons, deciduous forests, white clapboard houses, long winter storage period</p>
+        </div>
+        <div class="region-card">
+          <div class="rc-label">SE</div>
+          <h4 data-en="Southeast · Florida, the South" data-cn="东南 · 佛州与南方">Southeast · Florida, the South</h4>
+          <p data-en="Humid heat, palms, in-ground pools common, near year-round outdoor season" data-cn="又湿又热，棕榈树，家家有泳池，几乎一年四季都能在户外">Humid heat, palms, in-ground pools common, near year-round outdoor season</p>
+        </div>
+        <div class="region-card">
+          <div class="rc-label">MW</div>
+          <h4 data-en="Midwest" data-cn="中西部">Midwest</h4>
+          <p data-en="Big lawns, detached houses, family-centric, the heartland of cookout culture" data-cn="大草坪，独栋房子，一家人导向，烧烤文化的大本营">Big lawns, detached houses, family-centric, the heartland of cookout culture</p>
+        </div>
+        <div class="region-card">
+          <div class="rc-label">SW</div>
+          <h4 data-en="Southwest · Texas, Arizona" data-cn="西南 · 德州与亚利桑那">Southwest · Texas, Arizona</h4>
+          <p data-en="Arid heat, cacti, stone and concrete surfaces, much of life happens after dusk" data-cn="又干又热，仙人掌，地面多是石板或水泥，户外生活大多在日落之后">Arid heat, cacti, stone and concrete surfaces, much of life happens after dusk</p>
+        </div>
+        <div class="region-card">
+          <div class="rc-label">WC</div>
+          <h4 data-en="West Coast · CA &amp; PNW" data-cn="西海岸 · 加州与太平洋西北">West Coast · CA &amp; PNW</h4>
+          <p data-en="Mediterranean or temperate rainforest, design-forward, outdoor kitchens prevalent" data-cn="加州像地中海气候，西北像温带雨林；设计感强，户外厨房很常见">Mediterranean or temperate rainforest, design-forward, outdoor kitchens prevalent</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-label" data-en="Housing Typology" data-cn="住什么样的房子">Housing Typology</div>
+      <h3 data-en-html="&lt;svg class=&quot;h3-icon&quot; viewBox=&quot;0 0 28 28&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;path d=&quot;M2 14 L7 9 L12 14 L12 24 L2 24 Z&quot;/&gt;&lt;path d=&quot;M13 11 L17 7 L21 11 L21 24 L13 24 Z&quot;/&gt;&lt;rect x=&quot;22&quot; y=&quot;13&quot; width=&quot;4&quot; height=&quot;11&quot;/&gt;&lt;/svg&gt;House, townhouse, or apartment balcony" data-cn-html="&lt;svg class=&quot;h3-icon&quot; viewBox=&quot;0 0 28 28&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;path d=&quot;M2 14 L7 9 L12 14 L12 24 L2 24 Z&quot;/&gt;&lt;path d=&quot;M13 11 L17 7 L21 11 L21 24 L13 24 Z&quot;/&gt;&lt;rect x=&quot;22&quot; y=&quot;13&quot; width=&quot;4&quot; height=&quot;11&quot;/&gt;&lt;/svg&gt;独栋、联排，还是公寓阳台"><svg class="h3-icon" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><path d="M2 14 L7 9 L12 14 L12 24 L2 24 Z"></path><path d="M13 11 L17 7 L21 11 L21 24 L13 24 Z"></path><rect x="22" y="13" width="4" height="11"></rect></svg>House, townhouse, or apartment balcony</h3>
+      <p data-en-html="Each has a different outdoor footprint and a different daily rhythm. Our core audience is the &lt;strong&gt;middle-class family with a dedicated yard&lt;/strong&gt;, but townhouse and balcony dwellers represent meaningful upside that shouldn&#39;t be ignored. What does a typical yard, porch, or balcony actually look like&amp;mdash;its dimensions, its materials, its neighbors on both sides?" data-cn-html="不同的房子，户外空间完全不一样，生活节奏也跟着变。我们主要看&lt;strong&gt;有独立院子的中产家庭&lt;/strong&gt;，但联排和公寓阳台这两种也不能漏，这部分人以后会越来越多。具体想知道的是：一个普通美国人家的院子、门廊或者阳台，实际有多大、用什么材料、旁边的邻居长什么样。">Each has a different outdoor footprint and a different daily rhythm. Our core audience is the <strong>middle-class family with a dedicated yard</strong>, but townhouse and balcony dwellers represent meaningful upside that shouldn't be ignored. What does a typical yard, porch, or balcony actually look like—its dimensions, its materials, its neighbors on both sides?</p>
+    </div>
+
+    <div class="block">
+      <div class="block-label" data-en="Daily &amp; Weekly Rhythm" data-cn="每天每周的节奏">Daily &amp; Weekly Rhythm</div>
+      <h3 data-en-html="&lt;svg class=&quot;h3-icon&quot; viewBox=&quot;0 0 28 28&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;circle cx=&quot;14&quot; cy=&quot;14&quot; r=&quot;11&quot;/&gt;&lt;path d=&quot;M14 7 L14 14 L19 17&quot;/&gt;&lt;/svg&gt;What &amp;quot;going outside&amp;quot; looks like on a Tuesday vs. a Saturday" data-cn-html="&lt;svg class=&quot;h3-icon&quot; viewBox=&quot;0 0 28 28&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;circle cx=&quot;14&quot; cy=&quot;14&quot; r=&quot;11&quot;/&gt;&lt;path d=&quot;M14 7 L14 14 L19 17&quot;/&gt;&lt;/svg&gt;周二下午和周六下午，不是一回事"><svg class="h3-icon" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><circle cx="14" cy="14" r="11"></circle><path d="M14 7 L14 14 L19 17"></path></svg>What "going outside" looks like on a Tuesday vs. a Saturday</h3>
+      <p data-en="Weekday mornings, after-work hours, Saturday afternoons, Sunday evenings—the yard plays a different role in each. Understanding this rhythm is how we understand when, why, and for how long our products are used, and what mood they&#39;re lived into." data-cn="工作日一早、下班之后、周六下午、周日傍晚，院子在不同时段里扮演的角色完全不一样。搞清楚这个节奏，我们才知道自己的产品什么时候被用、为什么被用、用多久，以及那个时候的心情是怎样的。">Weekday mornings, after-work hours, Saturday afternoons, Sunday evenings—the yard plays a different role in each. Understanding this rhythm is how we understand when, why, and for how long our products are used, and what mood they're lived into.</p>
+    </div>
+
+    <div class="block">
+      <div class="block-label" data-en="Audience" data-cn="用户">Audience</div>
+      <h3 data-en-html="&lt;svg class=&quot;h3-icon&quot; viewBox=&quot;0 0 28 28&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;circle cx=&quot;10&quot; cy=&quot;9&quot; r=&quot;3.2&quot;/&gt;&lt;path d=&quot;M4 22 C4 17.5 6.5 15 10 15 C13.5 15 16 17.5 16 22&quot;/&gt;&lt;circle cx=&quot;20&quot; cy=&quot;11&quot; r=&quot;2.6&quot;/&gt;&lt;path d=&quot;M15.5 22 C15.5 18.5 17.5 17 20 17 C22.5 17 24.5 18.5 24.5 22&quot;/&gt;&lt;/svg&gt;Who buys, and who actually uses" data-cn-html="&lt;svg class=&quot;h3-icon&quot; viewBox=&quot;0 0 28 28&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;circle cx=&quot;10&quot; cy=&quot;9&quot; r=&quot;3.2&quot;/&gt;&lt;path d=&quot;M4 22 C4 17.5 6.5 15 10 15 C13.5 15 16 17.5 16 22&quot;/&gt;&lt;circle cx=&quot;20&quot; cy=&quot;11&quot; r=&quot;2.6&quot;/&gt;&lt;path d=&quot;M15.5 22 C15.5 18.5 17.5 17 20 17 C22.5 17 24.5 18.5 24.5 22&quot;/&gt;&lt;/svg&gt;买的人和用的人，可能不是同一个"><svg class="h3-icon" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="9" r="3.2"></circle><path d="M4 22 C4 17.5 6.5 15 10 15 C13.5 15 16 17.5 16 22"></path><circle cx="20" cy="11" r="2.6"></circle><path d="M15.5 22 C15.5 18.5 17.5 17 20 17 C22.5 17 24.5 18.5 24.5 22"></path></svg>Who buys, and who actually uses</h3>
+      <p data-en-html="Middle-class families lead the frame. But the research should also note the difference between &lt;strong&gt;millennial young families vs. boomer retirees&lt;/strong&gt;&amp;mdash;the former skews Instagram-ready and design-forward, the latter toward durability, classic silhouettes, and comfort." data-cn-html="主要看中产家庭，但要把&lt;strong&gt;千禧一代的年轻家庭和婴儿潮一代的退休人群&lt;/strong&gt;分开讲。年轻这波更在意晒出来好不好看、设计感够不够；退休那波更在意结实、经典、坐着舒不舒服。">Middle-class families lead the frame. But the research should also note the difference between <strong>millennial young families vs. boomer retirees</strong>—the former skews Instagram-ready and design-forward, the latter toward durability, classic silhouettes, and comfort.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 02: BACKYARD -->
+<section id="backyard">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-num">§ 02</span>
+      <h2 class="sec-title" data-en-html="Scene One · The &lt;em&gt;Backyard&lt;/em&gt;" data-cn-html="场景一 · 美国人的&lt;em&gt;后院&lt;/em&gt;">Scene One · The <em>Backyard</em></h2>
+    </div>
+    <p class="sec-intro" data-en="The American backyard is half architecture and half ritual. It&#39;s where weekends happen, where kids grow up, where the grill stays all summer. Understanding this space—its scale, its uses, its unspoken codes—is the core of the entire brief." data-cn="美国人的后院不只是个空间，也是一种生活习惯。周末的聚会在那里，孩子也在那里长大，烤炉从春天到秋天一直摆着。把这个空间搞清楚——多大、怎么用、有哪些大家都懂但没人明说的规矩——是这份调研最核心的部分。">The American backyard is half architecture and half ritual. It's where weekends happen, where kids grow up, where the grill stays all summer. Understanding this space—its scale, its uses, its unspoken codes—is the core of the entire brief.</p>
+
+    <div class="pullquote" data-en="When an American says &quot;backyard,&quot; what do they actually mean? Is it a stage for Saturday cookouts, a private sanctuary, a playroom for kids, a garden project—or all four in rotation through the seasons?" data-cn="美国人嘴里的 “backyard” 到底指什么？是周六烧烤的地方、一个人待着的地方、孩子玩的地方、种花种菜的地方——还是四季轮着来，这四种它都是？">When an American says "backyard," what do they actually mean? Is it a stage for Saturday cookouts, a private sanctuary, a playroom for kids, a garden project—or all four in rotation through the seasons?</div>
+
+    <div class="block">
+      <div class="block-label" data-en="Research Checklist · Backyard" data-cn="后院部分 · 要回答的问题">Research Checklist · Backyard</div>
+      <h3 data-en="Questions that need concrete answers" data-cn="这些问题需要给出具体答案">Questions that need concrete answers</h3>
+      <ul class="checklist">
+        <li data-id="cl-0">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="The rhythm of a typical year" data-cn="一年的节奏">The rhythm of a typical year</span>
+          <span class="cl-desc" data-en="Memorial Day, July 4th, Labor Day, Thanksgiving, the Super Bowl—what does the backyard look like around each? When does the season actually open and close?" data-cn="阵亡将士日、7 月 4 日国庆、劳动节、感恩节、超级碗这几个节点，后院在前后分别是什么样的？户外季到底什么时候开始、什么时候结束？">Memorial Day, July 4th, Labor Day, Thanksgiving, the Super Bowl—what does the backyard look like around each? When does the season actually open and close?</span>
+        </li>
+        <li data-id="cl-1">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="Typical activities, mapped" data-cn="都在后院干什么">Typical activities, mapped</span>
+          <span class="cl-desc" data-en="BBQ/grilling, pool parties, firepit gatherings, family dinners, kids at play, gardening, afternoon reading—how many people, how long, what a typical day looks like" data-cn="烧烤、泳池派对、火堆聚会、一家人吃晚饭、孩子玩、养花、下午看书——每种活动几个人参加、持续多久、典型的一天是什么样">BBQ/grilling, pool parties, firepit gatherings, family dinners, kids at play, gardening, afternoon reading—how many people, how long, what a typical day looks like</span>
+        </li>
+        <li data-id="cl-2">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="Precise definitions of spatial terms" data-cn="那些英文术语到底指什么">Precise definitions of spatial terms</span>
+          <span class="cl-desc" data-en="Deck vs. patio vs. porch vs. yard—what&#39;s the actual difference? How are lawn, hardscape, planting, water features, and lighting usually combined?" data-cn="Deck、patio、porch、yard——这几个词到底什么区别？一般怎么搭配草坪、硬地、植物、水景、灯光？">Deck vs. patio vs. porch vs. yard—what's the actual difference? How are lawn, hardscape, planting, water features, and lighting usually combined?</span>
+        </li>
+        <li data-id="cl-3">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="Common plants and landscape elements, by region" data-cn="每个地区常见的植物和景观">Common plants and landscape elements, by region</span>
+          <span class="cl-desc" data-en="Grass types (Bermuda, Kentucky bluegrass, St. Augustine, etc.), common trees, flowers, shrubs—the visual elements that make an American viewer feel a photo is &quot;right&quot;" data-cn="草坪种类（Bermuda、Kentucky bluegrass、St. Augustine 等）、常见的树、花、灌木——这些是让美国人看到图就觉得“对”的关键元素">Grass types (Bermuda, Kentucky bluegrass, St. Augustine, etc.), common trees, flowers, shrubs—the visual elements that make an American viewer feel a photo is "right"</span>
+        </li>
+        <li data-id="cl-4">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="The surrounding ecosystem of objects" data-cn="后院里还会出现什么">The surrounding ecosystem of objects</span>
+          <span class="cl-desc" data-en="Common grill types and silhouettes, pool typologies (above-ground vs. in-ground), string lights, kids&#39; toys, pets, fencing conventions between neighbors" data-cn="常见的烤炉长什么样、泳池是地面搭的还是挖地下的、串灯、孩子的玩具、宠物、邻里之间的栅栏一般怎么处理">Common grill types and silhouettes, pool typologies (above-ground vs. in-ground), string lights, kids' toys, pets, fencing conventions between neighbors</span>
+        </li>
+        <li data-id="cl-5">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="Seasonal transitions and storage" data-cn="换季和收纳">Seasonal transitions and storage</span>
+          <span class="cl-desc" data-en="Where does outdoor furniture go in winter? Garage, shed, or covered in place? This directly shapes our storage and packability design" data-cn="冬天户外家具放哪？进车库、进工具棚，还是原地盖个罩子？这直接决定我们的收纳和包装该怎么做">Where does outdoor furniture go in winter? Garage, shed, or covered in place? This directly shapes our storage and packability design</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 03: CAMPING -->
+<section id="camping">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-num">§ 03</span>
+      <h2 class="sec-title" data-en-html="Scene Two · &lt;em&gt;Camping&lt;/em&gt;" data-cn-html="场景二 · &lt;em&gt;露营&lt;/em&gt;">Scene Two · <em>Camping</em></h2>
+    </div>
+    <p class="sec-intro" data-en="Camping in America is a layered culture, not a single activity. A weekend at a KOA with the kids, a solo week on the Pacific Crest Trail, and a music festival in the desert all live under the same word. Understanding the layers is the point." data-cn="美国的露营是分层的，不是一件事。带孩子在 KOA 营地过个周末、一个人走 PCT 走一周、去沙漠里的音乐节过夜——这些都叫 camping。把这几层分清楚，才是关键。">Camping in America is a layered culture, not a single activity. A weekend at a KOA with the kids, a solo week on the Pacific Crest Trail, and a music festival in the desert all live under the same word. Understanding the layers is the point.</p>
+
+    <div class="block">
+      <div class="block-label" data-en="Research Checklist · Camping" data-cn="露营部分 · 要回答的问题">Research Checklist · Camping</div>
+      <h3 data-en="Questions that need concrete answers" data-cn="这些问题需要给出具体答案">Questions that need concrete answers</h3>
+      <ul class="checklist">
+        <li data-id="cl-6">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="The spectrum of camping styles" data-cn="露营有哪几种">The spectrum of camping styles</span>
+          <span class="cl-desc" data-en="Car camping, RV camping, glamping, backpacking, festival camping—who does each, how much gear, what the typical site looks like" data-cn="自驾露营、房车、glamping、徒步背包、音乐节——分别是什么人在玩、带多少东西、现场长什么样">Car camping, RV camping, glamping, backpacking, festival camping—who does each, how much gear, what the typical site looks like</span>
+        </li>
+        <li data-id="cl-7">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="Types of camping destinations" data-cn="都去哪些地方露营">Types of camping destinations</span>
+          <span class="cl-desc" data-en="National parks, state parks, KOA, private campgrounds, BLM land, a friend&#39;s backyard—what each looks like, what amenities and atmosphere differ" data-cn="国家公园、州立公园、KOA、私人营地、BLM 土地、朋友家院子——各自长什么样、有什么设施、氛围有什么不同">National parks, state parks, KOA, private campgrounds, BLM land, a friend's backyard—what each looks like, what amenities and atmosphere differ</span>
+        </li>
+        <li data-id="cl-8">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="A full typical camping trip" data-cn="一次露营完整是什么样">A full typical camping trip</span>
+          <span class="cl-desc" data-en="From packing, loading the car, arriving, setting up, cooking, evening activity, and breaking camp the next morning—the complete picture" data-cn="从打包、装车、到达、扎营、做饭、晚上干嘛、第二天怎么收——整个过程走一遍">From packing, loading the car, arriving, setting up, cooking, evening activity, and breaking camp the next morning—the complete picture</span>
+        </li>
+        <li data-id="cl-9">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="The gear ecosystem and the visual language of a campsite" data-cn="装备和营地的视觉">The gear ecosystem and the visual language of a campsite</span>
+          <span class="cl-desc" data-en="What a family brings on a trip, how a typical campsite is composed visually, what colors and silhouettes dominate the scene" data-cn="一家人出门一般带些什么，典型营地的画面怎么构成的，画面里主要是什么颜色和形状">What a family brings on a trip, how a typical campsite is composed visually, what colors and silhouettes dominate the scene</span>
+        </li>
+        <li data-id="cl-10">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="Season and region" data-cn="什么时候、在哪里露">Season and region</span>
+          <span class="cl-desc" data-en="Peak camping season by region; which areas have meaningful winter camping" data-cn="每个地区的露营旺季是什么时候；哪些地方冬天也有人去露营">Peak camping season by region; which areas have meaningful winter camping</span>
+        </li>
+        <li data-id="cl-11">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="The real differences between camper segments" data-cn="不同露营的人其实是不同的人">The real differences between camper segments</span>
+          <span class="cl-desc" data-en="The backpacker, the car camper, the RV family, and the glamper live very different lifestyles—their routines, aesthetics, and the meaning camping holds for them all diverge" data-cn="背包客、自驾露营的人、开房车的家庭、glamper，这几群人平时过的日子都不一样，审美不一样，他们去露营是为了什么也不一样">The backpacker, the car camper, the RV family, and the glamper live very different lifestyles—their routines, aesthetics, and the meaning camping holds for them all diverge</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 04: CULTURE -->
+<section id="culture">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-num">§ 04</span>
+      <h2 class="sec-title" data-en-html="Culture &amp; &lt;em&gt;Aesthetic&lt;/em&gt; Context" data-cn-html="文化和&lt;em&gt;审美&lt;/em&gt;背景">Culture &amp; <em>Aesthetic</em> Context</h2>
+    </div>
+    <p class="sec-intro" data-en="What finally makes a scene feel &quot;American&quot; is rarely any single object. It&#39;s the light, the landscape, the body language of the family, the bones of the house behind them." data-cn="让一张图看起来“像美国”的，很少是某一件具体的东西。更多是光线、四周的景观、家人之间的姿态、背景里那栋房子本身的样子。">What finally makes a scene feel "American" is rarely any single object. It's the light, the landscape, the body language of the family, the bones of the house behind them.</p>
+
+    <div class="block">
+      <div class="block-label" data-en="Research Checklist · Culture" data-cn="文化部分 · 要回答的问题">Research Checklist · Culture</div>
+      <h3 data-en="Questions that need concrete answers" data-cn="这些问题需要给出具体答案">Questions that need concrete answers</h3>
+      <ul class="checklist">
+        <li data-id="cl-12">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="What &quot;outdoor lifestyle&quot; actually means in American culture" data-cn="“outdoor lifestyle” 对美国人到底意味着什么">What "outdoor lifestyle" actually means in American culture</span>
+          <span class="cl-desc" data-en="Why the backyard and camping hold the weight they do—relationship to the American Dream, family values, and working culture" data-cn="为什么后院和露营在美国人生活里这么重要——和美国梦、家庭观念、工作文化是什么关系">Why the backyard and camping hold the weight they do—relationship to the American Dream, family values, and working culture</span>
+        </li>
+        <li data-id="cl-13">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="Mainstream aesthetic and its sub-styles" data-cn="主流审美和那些具体的风格">Mainstream aesthetic and its sub-styles</span>
+          <span class="cl-desc" data-en="Mainstream vs. coastal grandma, cottagecore, modern farmhouse, desert modern—how each sub-style speaks visually" data-cn="主流风格、以及 coastal grandma、cottagecore、modern farmhouse、desert modern 这几种风格，视觉上各自长什么样">Mainstream vs. coastal grandma, cottagecore, modern farmhouse, desert modern—how each sub-style speaks visually</span>
+        </li>
+        <li data-id="cl-14">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="The tells of &quot;this looks wrong&quot;" data-cn="什么样的图一看就“不是美国的”">The tells of "this looks wrong"</span>
+          <span class="cl-desc" data-en="Which elements in Chinese-made e-commerce imagery read as &quot;this isn&#39;t American&quot;—wrong plants, wrong house styles, wrong family compositions" data-cn="国内做的电商图里，哪些细节会让美国人一眼看出“这不是美国”——用错的植物、不对的房屋风格、不像的家庭组合">Which elements in Chinese-made e-commerce imagery read as "this isn't American"—wrong plants, wrong house styles, wrong family compositions</span>
+        </li>
+        <li data-id="cl-15">
+          <span class="cb"></span>
+          <span class="cl-title" data-en="The criteria of visual &quot;rightness&quot;" data-cn="什么样的图才算“对”">The criteria of visual "rightness"</span>
+          <span class="cl-desc" data-en="What makes an American viewer respond with &quot;yes, that&#39;s my life&quot;" data-cn="什么样的画面，美国人看一眼就觉得“对，我家就是这样”">What makes an American viewer respond with "yes, that's my life"</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 05: DELIVERABLES -->
+<section id="deliverables">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-num">§ 05</span>
+      <h2 class="sec-title" data-en-html="&lt;em&gt;Deliverables&lt;/em&gt;" data-cn-html="最终&lt;em&gt;交付&lt;/em&gt;什么"><em>Deliverables</em></h2>
+    </div>
+    <p class="sec-intro" data-en="A written report paired with directly reusable visual materials and quick-reference tools." data-cn="一份图文报告，加上可以直接拿来用的素材库和速查小卡。">A written report paired with directly reusable visual materials and quick-reference tools.</p>
+
+    <div class="deliverables">
+      <div class="del-item">
+        <div class="del-num">01</div>
+        <div class="del-body">
+          <h4 data-en="Main Report" data-cn="主报告">Main Report</h4>
+          <p data-en="Organized by the scope above, with writing and substantial imagery. Clear structure, usable as onboarding material for the team long-term." data-cn="按前面说的范围来写，文字和图片并重。结构要清楚，以后可以当团队的入职材料长期用。">Organized by the scope above, with writing and substantial imagery. Clear structure, usable as onboarding material for the team long-term.</p>
+        </div>
+        <div class="del-tag" data-en="20–30 PAGES" data-cn="20–30 页">20–30 PAGES</div>
+      </div>
+      <div class="del-item">
+        <div class="del-num">02</div>
+        <div class="del-body">
+          <h4 data-en="Visual Library" data-cn="素材库">Visual Library</h4>
+          <p data-en="Sorted by region, scene, and activity. Each image captioned with source and note—e.g. &quot;Typical Southwest yard: note cactus landscaping and tile roof.&quot;" data-cn="按地区、场景、活动分类。每张图下面写清楚来源和一句话说明，比如：“典型西南部后院，注意看仙人掌景观和瓦片屋顶。”">Sorted by region, scene, and activity. Each image captioned with source and note—e.g. "Typical Southwest yard: note cactus landscaping and tile roof."</p>
+        </div>
+        <div class="del-tag" data-en="200–300 IMAGES" data-cn="200–300 张">200–300 IMAGES</div>
+      </div>
+      <div class="del-item">
+        <div class="del-num">03</div>
+        <div class="del-body">
+          <h4 data-en="Dos &amp; Don&#39;ts Quick Card" data-cn="“该做 / 不该做” 速查卡">Dos &amp; Don'ts Quick Card</h4>
+          <p data-en="A condensed version designers can keep beside their desk—common pitfalls and the right moves when making US outdoor visuals." data-cn="一份精简版，设计师可以贴在工位旁边。做美国户外图的时候，哪些坑容易踩、哪些做法是对的，一目了然。">A condensed version designers can keep beside their desk—common pitfalls and the right moves when making US outdoor visuals.</p>
+        </div>
+        <div class="del-tag" data-en="2–4 PAGES" data-cn="2–4 页">2–4 PAGES</div>
+      </div>
+      <div class="del-item">
+        <div class="del-num">04</div>
+        <div class="del-body">
+          <h4 data-en="Source List" data-cn="信息源清单">Source List</h4>
+          <p data-en="The sites, blogs, YouTube channels, subreddits, and Instagram accounts cited in the research—so the team can keep digging on their own." data-cn="调研过程中用到的网站、博客、YouTube 频道、subreddit、Instagram 账号——方便团队以后自己继续挖。">The sites, blogs, YouTube channels, subreddits, and Instagram accounts cited in the research—so the team can keep digging on their own.</p>
+        </div>
+        <div class="del-tag" data-en="LINKS" data-cn="链接">LINKS</div>
+      </div>
+      <div class="del-item">
+        <div class="del-num">05</div>
+        <div class="del-body">
+          <h4 data-en="Unexpected Findings" data-cn="意外的发现">Unexpected Findings</h4>
+          <p data-en="A reserved chapter for anything the researcher encounters that the team should know but wasn&#39;t asked about in this brief." data-cn="专门留一章，记录调研过程中你发现的、我们团队应该知道但没在 brief 里写出来的东西。">A reserved chapter for anything the researcher encounters that the team should know but wasn't asked about in this brief.</p>
+        </div>
+        <div class="del-tag" data-en="OPEN" data-cn="开放">OPEN</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 06: METHODS -->
+<section id="methods">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-num">§ 06</span>
+      <h2 class="sec-title" data-en-html="Recommended &lt;em&gt;Sources&lt;/em&gt;" data-cn-html="推荐的&lt;em&gt;信息源&lt;/em&gt;">Recommended <em>Sources</em></h2>
+    </div>
+    <p class="sec-intro" data-en="Please work across many sources. Native discussion threads, real family vlogs, and listings photography are often worth more than press releases." data-cn="尽量多用几种来源。Reddit 上的原生讨论、普通家庭的 vlog、房产网站上的实拍图，往往比新闻稿有用得多。">Please work across many sources. Native discussion threads, real family vlogs, and listings photography are often worth more than press releases.</p>
+
+    <div class="source-list">
+      <div class="source-item">
+        <h5>Reddit</h5>
+        <p data-en="r/landscaping, r/gardening, r/camping, r/backyard, r/KOA and similar—native discussion" data-cn="r/landscaping、r/gardening、r/camping、r/backyard、r/KOA 这些板块，原生讨论比较真实">r/landscaping, r/gardening, r/camping, r/backyard, r/KOA and similar—native discussion</p>
+      </div>
+      <div class="source-item">
+        <h5>YouTube</h5>
+        <p data-en="Family vlogs, camping channels, backyard renovation creators—real families, real spaces" data-cn="普通家庭的 vlog、露营频道、后院改造频道——真人真场景">Family vlogs, camping channels, backyard renovation creators—real families, real spaces</p>
+      </div>
+      <div class="source-item">
+        <h5>Instagram / Pinterest</h5>
+        <p data-en="Visual reference. Filter by hashtag and regional audience." data-cn="主要看视觉。可以按 tag 和地区人群来筛。">Visual reference. Filter by hashtag and regional audience.</p>
+      </div>
+      <div class="source-item">
+        <h5>Zillow / Redfin</h5>
+        <p data-en="Real-estate listings photography is the best source for seeing actual yards across regions" data-cn="房产网站的照片是看真实美国庭院最好的地方，实拍、分地区、量大">Real-estate listings photography is the best source for seeing actual yards across regions</p>
+      </div>
+      <div class="source-item">
+        <h5 data-en="Retailer media" data-cn="零售商自己的内容">Retailer media</h5>
+        <p data-en="REI, Home Depot, Lowe&#39;s editorial content and category education" data-cn="REI、Home Depot、Lowe&#39;s 的官方博客和品类科普内容">REI, Home Depot, Lowe's editorial content and category education</p>
+      </div>
+      <div class="source-item">
+        <h5 data-en="Regional lifestyle press" data-cn="地方生活类杂志">Regional lifestyle press</h5>
+        <p data-en="Southern Living, Sunset Magazine, and similar regional titles" data-cn="Southern Living、Sunset Magazine 这些按地区做的生活杂志">Southern Living, Sunset Magazine, and similar regional titles</p>
+      </div>
+      <div class="source-item">
+        <h5 data-en="Official &amp; association data" data-cn="官方和协会的数据">Official &amp; association data</h5>
+        <p data-en="National Gardening Association, National Park Service participation data" data-cn="全美园艺协会、国家公园管理局发布的参与数据">National Gardening Association, National Park Service participation data</p>
+      </div>
+      <div class="source-item">
+        <h5 data-en="Amazon reviews" data-cn="亚马逊评论区">Amazon reviews</h5>
+        <p data-en="The top reviews of comparable products—how customers describe their use in their own words, the hardest first-hand data we can get" data-cn="同类产品 top reviews 里，消费者自己写的使用场景——这是我们能拿到的最硬的一手信息">The top reviews of comparable products—how customers describe their use in their own words, the hardest first-hand data we can get</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPENDIX: ONE-LINERS PER TEAM -->
+<section id="appendix">
+  <div class="container">
+    <div class="appendix-header">
+      <div class="appendix-label" data-en="Appendix" data-cn="附录">Appendix</div>
+      <h2 class="appendix-title" data-en-html="How each team will &lt;em&gt;use&lt;/em&gt; this" data-cn-html="这份调研谁会&lt;em&gt;拿去用&lt;/em&gt;、怎么用">How each team will <em>use</em> this</h2>
+      <div class="appendix-for" data-en="So you know where the work lands" data-cn="让你知道最终落到谁手上">So you know where the work lands</div>
+    </div>
+
+    <div class="block">
+      <p data-en-html="&lt;strong&gt;Designers&lt;/strong&gt; &amp;mdash; hero images, A+, detail pages, ad creative. They need regional visual &quot;rightness&quot;: the plants, light, house types, family compositions, and style sub-genres that make a scene read as American." data-cn-html="&lt;strong&gt;设计师&lt;/strong&gt; —— 负责主图、A+、详情页、广告素材。他们需要的是“画面对不对”这件事——各地区该用什么植物、什么光、什么样的房子、什么样的家庭组合，以及对应的风格类型。"><strong>Designers</strong> — hero images, A+, detail pages, ad creative. They need regional visual "rightness": the plants, light, house types, family compositions, and style sub-genres that make a scene read as American.</p>
+      <p data-en-html="&lt;strong&gt;E-commerce&lt;/strong&gt; &amp;mdash; listings, bullets, ad keywords. They need the vocabulary of how Americans talk about outdoor life: the use-case words, the seasonal calendar, the pain-point language, the context clues native brands assume." data-cn-html="&lt;strong&gt;运营&lt;/strong&gt; —— 负责 listing、五点描述、广告关键词。他们需要的是美国人自己谈论户外生活的那套说法：场景用的词、一年里的节日日历、常见的吐槽和痛点、本土品牌默认大家都懂的那些梗。"><strong>E-commerce</strong> — listings, bullets, ad keywords. They need the vocabulary of how Americans talk about outdoor life: the use-case words, the seasonal calendar, the pain-point language, the context clues native brands assume.</p>
+    </div>
+
+    <div class="pullquote" data-en="This brief spells out the questions we already know to ask—but we&#39;re more interested in what you find that we didn&#39;t know to ask. Keeping the edges open is part of the brief." data-cn="这份 brief 写的是我们已经知道该问的问题。但我们更想看到的，是你在调研过程中发现的、我们根本没想到要问的东西。留一些开放的空间，是这份 brief 故意的设计。">This brief spells out the questions we already know to ask—but we're more interested in what you find that we didn't know to ask. Keeping the edges open is part of the brief.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="end-mark" data-en="— Fin —" data-cn="— 完 —">— Fin —</div>
+  <div class="colophon" data-en-html="Brief · American Outdoor Life Research&lt;br&gt;V1 · 2026 · Internal" data-cn-html="美国户外生活方式调研 Brief&lt;br&gt;V1 · 2026 · 内部使用">Brief · American Outdoor Life Research<br>V1 · 2026 · Internal</div>
+  <button class="reset-btn" id="resetBtn" data-en="Reset All Checks" data-cn="清空所有勾选">Reset All Checks</button>
+</footer>
+
+</div>
+
+<script>
+  // ============================
+  // scroll progress bar
+  // ============================
+  const scrollBar = document.getElementById('scrollProgress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    scrollBar.style.width = pct + '%';
+  });
+
+  // ============================
+  // side nav active state
+  // ============================
+  const navLinks = document.querySelectorAll('.side-nav a');
+  const sections = Array.from(navLinks).map(a => document.getElementById(a.dataset.target));
+
+  function updateActiveNav() {
+    const mid = window.scrollY + window.innerHeight * 0.35;
+    let activeIdx = 0;
+    sections.forEach((sec, i) => {
+      if (sec && sec.offsetTop <= mid) activeIdx = i;
+    });
+    navLinks.forEach((a, i) => a.classList.toggle('active', i === activeIdx));
+  }
+  window.addEventListener('scroll', updateActiveNav);
+  updateActiveNav();
+
+  // ============================
+  // checklist + persistence
+  // ============================
+  const STORAGE_KEY = 'brief-checks-v1-en';
+  const items = document.querySelectorAll('.checklist li');
+  const pbCount = document.getElementById('pbCount');
+  const pbTotal = document.getElementById('pbTotal');
+  const pbFill = document.getElementById('pbFill');
+  const CIRC = 2 * Math.PI * 12; // ≈75.4
+
+  pbTotal.textContent = items.length;
+
+  // assign stable ids
+  items.forEach((li, i) => li.dataset.id = 'cl-' + i);
+
+  // load state
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { state = {}; }
+
+  function updateProgress() {
+    const done = document.querySelectorAll('.checklist li.done').length;
+    pbCount.textContent = done;
+    const pct = items.length ? done / items.length : 0;
+    pbFill.style.strokeDashoffset = (CIRC * (1 - pct)).toFixed(2);
+  }
+
+  items.forEach(li => {
+    if (state[li.dataset.id]) li.classList.add('done');
+    li.addEventListener('click', () => {
+      li.classList.toggle('done');
+      state[li.dataset.id] = li.classList.contains('done');
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+      updateProgress();
+    });
+  });
+
+  updateProgress();
+
+  // ============================
+  // progress badge: click jumps to next undone
+  // ============================
+  document.getElementById('progressBadge').addEventListener('click', () => {
+    const next = Array.from(items).find(li => !li.classList.contains('done'));
+    if (next) {
+      next.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      next.style.transition = 'background 0.3s';
+      next.style.background = 'rgba(184,73,31,0.08)';
+      setTimeout(() => { next.style.background = ''; }, 800);
+    } else {
+      document.querySelector('footer').scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+  // ============================
+  // language toggle
+  // ============================
+  const LANG_KEY = 'brief-lang-v1';
+  const langButtons = document.querySelectorAll('.lang-toggle button');
+
+  function applyLang(lang) {
+    document.body.classList.toggle('lang-cn', lang === 'cn');
+    document.documentElement.lang = lang === 'cn' ? 'zh-CN' : 'en';
+
+    // text content swaps
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (val !== null) el.textContent = val;
+    });
+    // html content swaps (for elements with <em>, <strong>, <br>)
+    document.querySelectorAll('[data-en-html]').forEach(el => {
+      const val = el.getAttribute('data-' + lang + '-html');
+      if (val !== null) el.innerHTML = val;
+    });
+    // title attribute swap
+    document.querySelectorAll('[data-en-title]').forEach(el => {
+      const val = el.getAttribute('data-' + lang + '-title');
+      if (val !== null) el.setAttribute('title', val);
+    });
+
+    langButtons.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+  }
+
+  langButtons.forEach(b => b.addEventListener('click', () => applyLang(b.dataset.lang)));
+
+  let savedLang = 'en';
+  try { savedLang = localStorage.getItem(LANG_KEY) || 'en'; } catch (e) {}
+  applyLang(savedLang);
+
+  // ============================
+  // reset (localized confirm)
+  // ============================
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    const msg = document.body.classList.contains('lang-cn')
+      ? '确定要重置所有勾选吗？'
+      : 'Reset all checks?';
+    if (!confirm(msg)) return;
+    items.forEach(li => li.classList.remove('done'));
+    state = {};
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    updateProgress();
+  });
+</script>
+
+
+</body></html>
